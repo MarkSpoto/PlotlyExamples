@@ -1,0 +1,73 @@
+---
+title: "Plotly Examples - Coursera Data Products"
+author: "Mark S Spoto"
+date: "August 24, 2018"
+bibliography: references.bib
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+packages <- c("plotly", "dplyr", "leaflet")
+if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packages, rownames(installed.packages())), repos = "http://cran.us.r-project.org")  
+}
+```
+
+Plotly examples from Saurav Kaushik (https://www.analyticsvidhya.com/blog/2017/01/beginners-guide-to-create-beautiful-interactive-data-visualizations-using-plotly-in-r-and-python/)
+
+### Load Libraries
+```{r, warning=FALSE, error=FALSE, message=FALSE}
+library(plotly)
+```
+
+## Plot Code
+```{r echo=FALSE}
+data(AirPassengers)
+data(volcano)
+data(iris)
+attach(iris)
+```
+
+#### Histogram
+```{r histogram, fig.align='center', fig.cap='Figure 1'}
+hist <- plot_ly(x=Sepal.Length, type='histogram')
+
+# defining labels and title using layout()
+layout(hist, title = "Iris Dataset - Sepal.Length",
+       xaxis = list(title = "Sepal.Length"),
+       yaxis = list(title = "Count"))
+```
+
+### Boxplot
+```{r boxplot, fig.align='center', fig.cap='Figure 2'}
+box_plot <- plot_ly(y=Sepal.Length, type='box', color=Species)
+layout(box_plot, title = "Iris Dataset - Sepal.Length Boxplot",
+       yaxis = list(title="Sepal.Length"))
+```
+
+### Scatter Plot
+```{r scatterplot, fig.align='center', fig.cap='Figure 3'}
+scatter_plot <- plot_ly(x = Sepal.Length, y=Sepal.Width, type='scatter', mode='markers', color=Species)
+layout(scatter_plot, title = "Iris Dataset - Sepal.Length vs Sepal.Width",
+       xaxis = list(title = "Sepal.Length"),
+       yaxis = list(title = "Sepal.Width"))
+```
+
+### Time Series
+```{r timeseries, fig.align='center', fig.cap='Figure 4'}
+data("AirPassengers")
+time_series <- plot_ly(x=time(AirPassengers), y=AirPassengers, type="scatter", mode="lines")
+layout(time_series, title = "Iris Dataset - AirPassengers Dataset - Time Series Plot",
+       xaxis = list(title = "Time"),
+       yaxis = list(title = "Passengers"))
+```
+
+### Heat map
+```{r heatmap, fig.align='center', fig.cap='Figure 5'}
+data("volcano")
+plot_ly(z=~volcano, type="heatmap")
+```
